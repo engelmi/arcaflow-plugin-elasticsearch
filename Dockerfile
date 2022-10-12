@@ -10,6 +10,11 @@ WORKDIR /app
 
 RUN pip3 install -r requirements.txt
 
+RUN mkdir /htmlcov
+RUN pip3 install coverage
+RUN python3 -m coverage run test_es_plugin.py
+RUN python3 -m coverage html -d /htmlcov
+
 ENTRYPOINT ["python3", "/app/es_plugin.py"]
 CMD []
 

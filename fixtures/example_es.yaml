@@ -1,0 +1,4 @@
+username_envvar: ELASTICSEARCH_USERNAME
+password_envvar: ELASTICSEARCH_PASSWORD
+url_envvar: ELASTICSEARCH_URL
+index: smoke-test-example
