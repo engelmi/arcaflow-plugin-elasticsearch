@@ -11,8 +11,18 @@ from arcaflow_plugin_sdk import plugin
 from es_schema import (
     ErrorOutput,
     SuccessOutput,
-    ElasticsearchStorage
+    StoreDocumentRequest
 )
+
+
+def getEnvironmentVariables(params: StoreDocumentRequest) -> tuple[str, str, str]:
+    """
+    :return: a tuple [url, user, password] containing the extracted values 
+    from the environment variables. 
+    """
+    return os.environ.get(params.url), \
+        os.environ.get(params.user), \
+        os.environ.get(params.password)
 
 
 @plugin.step(
@@ -21,36 +31,28 @@ from es_schema import (
     description="Load data into elasticsearch instance",
     outputs={"success": SuccessOutput, "error": ErrorOutput},
 )
-def batch(
-    params: ElasticsearchStorage
+def store(
+    params: StoreDocumentRequest
 ) -> typing.Tuple[str, typing.Union[SuccessOutput, ErrorOutput]]:
     """
-
-    :return: the string identifying which output it is,
-             as well the output structure
+    :return: the string identifying which output it is, as well the output structure
     """
-    es = Elasticsearch(
-        hosts=os.environ.get(params.url_envvar),
-        http_auth=(
-            os.environ.get(params.username_envvar),
-            os.environ.get(params.password_envvar)
-        )
-    )
-    try:
-        es.index(
-            index=params.index,
-            document=params.data
-        )
-        return "success", SuccessOutput(
-            "upload"
-        )
-    except Exception:
-        return "error", ErrorOutput(
-            format_exc()
-        )
 
+    url, user, password = getEnvironmentVariables(params)
+
+    try:
+        es = Elasticsearch(hosts=url, basic_auth=[user, password])
+        resp = es.index(index=params.index, document=params.data)
+        if resp.meta.status != 201:
+            raise Exception("response status: {}".format(resp.meta.status))
+
+        return "success", SuccessOutput("successfully uploaded document for index {}".format(params.index))
+    except Exception as ex:
+        return "error", ErrorOutput(
+            "Failed to create Elasticsearch document: {}".format(ex)
+        )
 
 if __name__ == "__main__":
     sys.exit(plugin.run(plugin.build_schema(
-        batch
+        store
     )))

@@ -1,0 +1,8 @@
+url: ELASTICSEARCH_URL
+user: ELASTICSEARCH_USER
+password: ELASTICSEARCH_PASSWORD
+index: smoke-test-example
+data: {
+  "keyNo1": "xXx",
+  "keyNo2": "Mambo No 5",
+}

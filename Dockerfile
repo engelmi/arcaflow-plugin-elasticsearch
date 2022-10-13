@@ -2,10 +2,10 @@ FROM quay.io/centos/centos:stream8
 
 RUN dnf -y module install python39 && dnf -y install python39 python39-pip git
 RUN mkdir /app
-ADD LICENSE /app
-ADD es_plugin.py /app
-ADD test_es_plugin.py /app
-ADD requirements.txt /app
+COPY LICENSE /app
+COPY es_plugin.py /app
+COPY test_es_plugin.py /app
+COPY requirements.txt /app
 WORKDIR /app
 
 RUN pip3 install -r requirements.txt
