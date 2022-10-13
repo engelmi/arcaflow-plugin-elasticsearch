@@ -1,69 +1,51 @@
 from dataclasses import dataclass, field
-import typing
 from typing import Annotated
+import typing
 
 from arcaflow_plugin_sdk import validation, schema
 
-
 @dataclass
 class ElasticsearchStorage:
-    username_envvar: Annotated[str] = field(
+    url: str = field(
         metadata={
-            'name': 'username_envvar',
-            'description': """Environment variable that points to """
-            """an authorized username for the given Elasticsearch instance."""
+            'name': 'url',
+            'description': """Name of the environment variable containing """
+            """the URL for the Elasticsearch instance."""
         }
     )
-    username: Annotated[typing.Optional[str]] = field(
+
+    user: Annotated[str, validation.min(1)] = field(
         metadata={
-            'name': 'username',
-            'description': """Authorized username for the given """
-            """Elasticsearch instance."""
+            'name': 'user',
+            'description': """Name of the environment variable containing """
+            """an authorized user for the given Elasticsearch instance."""
         }
     )
-    password_envvar: Annotated[str, validation.min(0)] = field(
-        metadata={
-            'name': 'password_envvar',
-            'description': """Environment variable that points to the""" 
-            """password for the given username."""
-        }
-    )
-    password: Annotated[typing.Optional[str], validation.min(0)] = field(
+
+    password: str = field(
         metadata={
             'name': 'password',
-            'description': """Password for username for the given """
-            """username."""
+            'description': """Name of the environment variable containing the"""
+            """password for the given user."""
         }
     )
-    url_envvar: Annotated[str] = field(
-        metadata={
-            'name': 'url',
-            'description': """Environment variable that points """
-            """to the URL of your Elasticsearch instance."""
-        }
-    )
-    url: Annotated[typing.Optional[str]] = field(
-        metadata={
-            'name': 'url',
-            'description': """URL to your Elasticsearch """
-            """instance."""
-        }
-    )
+
     index: Annotated[str, validation.min(1)] = field(
         metadata={
             'name': 'index',
-            'description': """Name of the index that """
-            """will receive this data."""
-        }
-    )
-    data: Annotated[typing.Optional[schema.ANY_TYPE]] = field(
-        metadata={
-            'name': 'data',
-            'description': """Data to upload to your """
-            """Elasticsearch index."""
+            'description': """Name of the Elasticsearch index that will receive the data. """
         }
     )
 
+    data: typing.Dict[str, schema.ANY_TYPE] = field(
+        metadata={
+            'name': 'data',
+            'description': """Data to upload to your Elasticsearch index."""
+        }
+    )
+
+    # integration test in workflow: uperf schauen (plugin?)
+    # arcaflow sdk from main commit for any_type
 
 @dataclass
 class SuccessOutput:
@@ -72,12 +54,9 @@ class SuccessOutput:
     """
     message: str
 
-
 @dataclass
 class ErrorOutput:
     """
-    This is the output data structure in the error  case.
+    This is the output data structure in the error case.
     """
     error: str
-
-
