@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import sys
 import unittest
 import es_plugin
 from arcaflow_plugin_sdk import plugin
@@ -11,9 +10,9 @@ class StoreTest(unittest.TestCase):
     def test_serialization():
         plugin.test_object_serialization(
             es_plugin.StoreDocumentRequest(
-                url="ELASTIC_URL",
-                user="ELASTIC_USER",
-                password="ELASTIC_PASSWORD",
+                url="ELASTICSEARCH_URL",
+                username="ELASTICSEARCH_USERNAME",
+                password="ELASTICSEARCH_PASSWORD",
                 index="another-index",
                 data={
                     "key1": "interesting value",

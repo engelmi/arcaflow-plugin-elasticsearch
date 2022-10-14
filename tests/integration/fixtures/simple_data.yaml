@@ -1,5 +1,5 @@
 url: ELASTICSEARCH_URL
-user: ELASTICSEARCH_USER
+username: ELASTICSEARCH_USERNAME
 password: ELASTICSEARCH_PASSWORD
 index: smoke-test-example
 data: {

@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-from distutils.command.build import build
 import os
 import unittest
 import es_plugin
@@ -12,9 +11,12 @@ class StoreIntegrationTest(unittest.TestCase):
     def setUp(self) -> None:
         super().setUp()
 
-        os.environ["ELASTICSEARCH_URL"] = "http://localhost:9200"
-        os.environ["ELASTICSEARCH_USER"] = "elastic"
-        os.environ["ELASTICSEARCH_PASSWORD"] = "topsecret"
+        if os.environ.get("ELASTICSEARCH_URL") == "":
+            os.environ["ELASTICSEARCH_URL"] = "http://localhost:9200"
+        if os.environ.get("ELASTICSEARCH_USERNAME") == "":
+            os.environ["ELASTICSEARCH_USERNAME"] = "elastic"
+        if os.environ.get("ELASTICSEARCH_PASSWORD") == "":
+            os.environ["ELASTICSEARCH_PASSWORD"] = "topsecret"
     
     def test_empty_data(self) -> None:
         exitcode = plugin.run(

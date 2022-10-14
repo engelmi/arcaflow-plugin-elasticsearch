@@ -2,7 +2,7 @@
 name = "arcaflow-plugin-elasticsearch"
 version = "0.0.0"
 description = "arcaflow plugin for elasticsearch"
-authors = ["Matthew F Leader"]
+authors = ["Arcaflow Contributors"]
 license = "Apache-2.0+GPL-2.0-only"
 
 [tool.poetry.dependencies]

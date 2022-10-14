@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from typing import Annotated
 import typing
 
-from arcaflow_plugin_sdk import validation, schema
+from arcaflow_plugin_sdk import validation
 
 @dataclass
 class StoreDocumentRequest:
@@ -14,9 +14,9 @@ class StoreDocumentRequest:
         }
     )
 
-    user: Annotated[str, validation.min(1)] = field(
+    username: Annotated[str, validation.min(1)] = field(
         metadata={
-            'name': 'user',
+            'name': 'username',
             'description': """Name of the environment variable containing """
             """an authorized user for the given Elasticsearch instance."""
         }

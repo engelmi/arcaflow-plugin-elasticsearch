@@ -3,7 +3,6 @@
 import os
 import sys
 import typing
-from traceback import format_exc
 
 from elasticsearch import Elasticsearch
 
@@ -21,7 +20,7 @@ def getEnvironmentVariables(params: StoreDocumentRequest) -> tuple[str, str, str
     from the environment variables. 
     """
     return os.environ.get(params.url), \
-        os.environ.get(params.user), \
+        os.environ.get(params.username), \
         os.environ.get(params.password)
 
 
@@ -39,17 +38,17 @@ def store(
     """
 
     url, user, password = getEnvironmentVariables(params)
-
+    
     try:
         es = Elasticsearch(hosts=url, basic_auth=[user, password])
         resp = es.index(index=params.index, document=params.data)
         if resp.meta.status != 201:
-            raise Exception("response status: {}".format(resp.meta.status))
+            raise Exception(f"response status: {resp.meta.status}")
 
-        return "success", SuccessOutput("successfully uploaded document for index {}".format(params.index))
+        return "success", SuccessOutput(f"successfully uploaded document for index {params.index}")
     except Exception as ex:
         return "error", ErrorOutput(
-            "Failed to create Elasticsearch document: {}".format(ex)
+            f"Failed to create Elasticsearch document: {ex}"
         )
 
 if __name__ == "__main__":
