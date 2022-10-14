@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+import hashlib
+import json
 import os
 import sys
 import typing
@@ -23,6 +25,14 @@ def getEnvironmentVariables(params: StoreDocumentRequest) -> tuple[str, str, str
         os.environ.get(params.username), \
         os.environ.get(params.password)
 
+def gen_id(params: StoreDocumentRequest) -> str:
+    """
+    :return: a str representing the SHA256 hash for the store document request.
+    """
+    sha256 = hashlib.sha256()
+    data_raw = json.dumps(params.data)
+    sha256.update(data_raw)
+    return sha256.hexdigest()
 
 @plugin.step(
     id="elasticsearch",
@@ -41,7 +51,8 @@ def store(
     
     try:
         es = Elasticsearch(hosts=url, basic_auth=[user, password])
-        resp = es.index(index=params.index, document=params.data)
+        data_id = get_id(params.data)
+        resp = es.index(index=params.index, id=data_id, document=params.data)
         if resp.meta.status != 201:
             raise Exception(f"response status: {resp.meta.status}")
 
