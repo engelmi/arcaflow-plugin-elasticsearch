@@ -42,3 +42,5 @@ python -m unittest tests.integration.test_es_plugin
 # the --abort-on-container-exit ensures a docker-compose down after the tests have run
 docker-compose -f docker-compose-integration.yml up --abort-on-container-exit
 ```
+
+__Note:__ Make sure to `docker-compose down` and remove the volume after one run as there is currently no cleanup done. 
