@@ -3,7 +3,7 @@ FROM quay.io/centos/centos:stream8 as arcaflow-elasticsearch-plugin
 RUN dnf -y module install python39 && dnf -y install python39 python39-pip git
 RUN mkdir /app
 
-COPY LICENSE /app
+ADD https://raw.githubusercontent.com/arcalot/arcaflow-plugins/main/LICENSE /app
 COPY es_plugin.py /app
 COPY es_schema.py /app
 COPY requirements.txt /app
