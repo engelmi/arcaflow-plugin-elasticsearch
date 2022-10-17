@@ -2,7 +2,8 @@ from dataclasses import dataclass, field
 from typing import Annotated
 import typing
 
-from arcaflow_plugin_sdk import validation
+from arcaflow_plugin_sdk import validation, schema
+
 
 @dataclass
 class StoreDocumentRequest:
@@ -37,12 +38,13 @@ class StoreDocumentRequest:
         }
     )
 
-    data: typing.Dict[str, str] = field(
+    data: typing.Dict[str, typing.Any] = field(
         metadata={
             'name': 'data',
             'description': """Data to upload to your Elasticsearch index."""
         }
     )
+
 
 @dataclass
 class SuccessOutput:
@@ -50,6 +52,7 @@ class SuccessOutput:
     This is the output data structure for the success case.
     """
     message: str
+
 
 @dataclass
 class ErrorOutput:

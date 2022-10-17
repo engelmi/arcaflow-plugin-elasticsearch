@@ -14,14 +14,14 @@ from es_schema import (
 )
 
 
-def getEnvironmentVariables(params: StoreDocumentRequest) -> tuple[str, str, str]:
+def getEnvironmentVariables(envUrl: str, envUser: str, envPassword: str) -> tuple[str, str, str]:
     """
     :return: a tuple [url, user, password] containing the extracted values 
     from the environment variables. 
     """
-    return os.environ.get(params.url), \
-        os.environ.get(params.username), \
-        os.environ.get(params.password)
+    return os.environ.get(envUrl), \
+        os.environ.get(envUser), \
+        os.environ.get(envPassword)
 
 
 @plugin.step(
@@ -37,8 +37,9 @@ def store(
     :return: the string identifying which output it is, as well the output structure
     """
 
-    url, user, password = getEnvironmentVariables(params)
-    
+    url, user, password = getEnvironmentVariables(
+        params.url, params.username, params.password)
+
     try:
         es = Elasticsearch(hosts=url, basic_auth=[user, password])
         resp = es.index(index=params.index, document=params.data)
@@ -50,6 +51,7 @@ def store(
         return "error", ErrorOutput(
             f"Failed to create Elasticsearch document: {ex}"
         )
+
 
 if __name__ == "__main__":
     sys.exit(plugin.run(plugin.build_schema(

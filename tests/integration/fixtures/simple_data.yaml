@@ -1,7 +1,7 @@
 url: ELASTICSEARCH_URL
 username: ELASTICSEARCH_USERNAME
 password: ELASTICSEARCH_PASSWORD
-index: smoke-test-example
+index: simple-data
 data: {
   "keyNo1": "xXx",
   "keyNo2": "Mambo No 5",

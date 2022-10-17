@@ -1,4 +1,4 @@
-git+https://github.com/arcalot/arcaflow-plugin-sdk-python@bce430a59a5782ef26aed9a196149031c667c6ff
+git+https://github.com/arcalot/arcaflow-plugin-sdk-python@d6a4d98017762fa488d308fbf344372fcb4f3629
 attrs==22.1.0; python_full_version >= "3.7.1" and python_version >= "3.9"
 automat==20.2.0; python_full_version >= "3.7.1" and python_version >= "3.9"
 certifi==2022.9.24; python_version >= "3.6" and python_version < "4"
