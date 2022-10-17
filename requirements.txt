@@ -1,4 +1,4 @@
-git+https://github.com/arcalot/arcaflow-plugin-sdk-python@d6a4d98017762fa488d308fbf344372fcb4f3629
+arcaflow-plugin-sdk==0.8.0; python_version >= "3.9"
 attrs==22.1.0; python_full_version >= "3.7.1" and python_version >= "3.9"
 automat==20.2.0; python_full_version >= "3.7.1" and python_version >= "3.9"
 certifi==2022.9.24; python_version >= "3.6" and python_version < "4"
@@ -15,3 +15,4 @@ twisted==22.8.0; python_full_version >= "3.7.1" and python_version >= "3.9"
 typing-extensions==4.4.0; python_full_version >= "3.7.1" and python_version >= "3.9"
 urllib3==1.26.12; python_version >= "3.6" and python_full_version < "3.0.0" and python_version < "4" or python_full_version >= "3.6.0" and python_version < "4" and python_version >= "3.6"
 zope.interface==5.5.0; python_full_version >= "3.7.1" and python_version >= "3.9"
+requests==2.28.1; python_version >= "3.9"
